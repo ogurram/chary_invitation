@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Narsimha & Rakshitha - Wedding Invitation</title>
+    <style>
+        /* Base Reset & Variables */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            background: #e6d8c4;
+            background: radial-gradient(ellipse at center, #fdfbf7 0%, #ecdcc0 100%);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        /* Ambient light overlay for atmosphere */
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 50% 30%, rgba(255, 255, 255, 0.6) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .invitation-wrapper {
+            position: relative;
+            width: 90vw;
+            max-width: 440px;
+            height: 82vh;
+            max-height: 680px;
+        }
+
+        /* Static Depth Layers: gives the card the appearance of a 3-sheet stack */
+        .depth-layer {
+            position: absolute;
+            background: #faecd7;
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            border-radius: 0 0 4px 4px;
+            pointer-events: none;
+        }
+
+        .depth-layer-1 {
+            bottom: -6px;
+            left: 2%;
+            right: 2%;
+            height: 20px;
+            z-index: 1;
+            box-shadow: 0 4px 10px rgba(60, 40, 20, 0.05);
+        }
+
+        .depth-layer-2 {
+            bottom: -12px;
+            left: 4%;
+            right: 4%;
+            height: 20px;
+            z-index: 0;
+            background: #f4e5cc;
+            box-shadow: 0 6px 15px rgba(60, 40, 20, 0.08);
+        }
+
+        /* Main sliding stack container */
+        .invitation-card {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 5;
+            border-radius: 4px;
+            overflow: hidden;
+            cursor: pointer;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15),
+                0 2px 10px rgba(0, 0, 0, 0.05);
+            background: #faf6ed;
+        }
+
+        /* Individual paper layers */
+        .chapter {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(145deg, #fffcf8 0%, #f4ebd5 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 40px 30px;
+            /* Smooth transitions for slide & fade effect */
+            transition: transform 0.9s cubic-bezier(0.2, 0.8, 0.2, 1),
+                opacity 0.9s cubic-bezier(0.2, 0.8, 0.2, 1);
+            transform-origin: top center;
+            box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.08);
+            /* Casts shadow when sliding up */
+            will-change: transform, opacity;
+        }
+
+        /* Dynamic Chapter Textures */
+        .chapter::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            opacity: 0.45;
+            /* Increased for stronger background visibility */
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        #chapter-1::before {
+            background: url('./bg_cover.png') center/cover;
+        }
+
+        #chapter-2::before {
+            background: url('./bg_beginning.png') center/cover;
+        }
+
+        #chapter-3::before {
+            background: url('./bg_journey.png') center/cover;
+        }
+
+        #chapter-4::before {
+            background: url('./image_pic.avif') center/cover;
+        }
+
+        /* Inner gold layered border */
+        .chapter::after {
+            content: '';
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            right: 15px;
+            bottom: 15px;
+            border: 1px solid rgba(212, 175, 55, 0.35);
+            border-radius: 2px;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .content-inner {
+            position: relative;
+            z-index: 2;
+            width: 100%;
+            max-width: 320px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* Typography */
+        .groom,
+        .bride {
+            font-size: 2.1em;
+            font-weight: 400;
+            letter-spacing: 3px;
+            color: #4a3320;
+            margin: 5px 0;
+            line-height: 1.2;
+            text-transform: uppercase;
+        }
+
+        .ampersand {
+            font-size: 1.6em;
+            font-style: italic;
+            color: #c59b6d;
+            margin: 15px 0;
+        }
+
+        .tagline {
+            font-size: 1.05em;
+            font-style: italic;
+            color: #7a5c43;
+            margin-top: 35px;
+            font-weight: 300;
+            letter-spacing: 1px;
+            line-height: 1.6;
+        }
+
+        .section-title {
+            font-size: 1.5em;
+            color: #4a3320;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-bottom: 5px;
+        }
+
+        .decorative-separator {
+            width: 60px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #c59b6d, transparent);
+            margin: 25px auto;
+        }
+
+        .story-text {
+            font-size: 1.1em;
+            color: #5c4033;
+            line-height: 1.8;
+            font-style: italic;
+            font-weight: 300;
+        }
+
+        .invite-text {
+            font-size: 0.95em;
+            color: #5c4033;
+            font-style: italic;
+            line-height: 1.6;
+        }
+
+        .couple-names-small {
+            font-size: 1.55em;
+            color: #4a3320;
+            margin: 18px 0;
+            letter-spacing: 1px;
+            font-weight: 400;
+        }
+
+        .details-box {
+            margin: 20px auto 0;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.9); /* Vastly increased opacity to pop against background */
+            border: 1px solid rgba(197, 155, 109, 0.5);
+            border-radius: 4px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+        }
+
+        /* Visibility enhancements specifically for the Chapter 4 overlay */
+        #chapter-4 .invite-text,
+        #chapter-4 .couple-names-small,
+        #chapter-4 .closing-text {
+            /* Create a frosted white halo to detach text from the background texture */
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.9), 0 0 20px rgba(255, 255, 255, 0.8);
+            font-weight: 500;
+        }
+        
+        #chapter-4 .couple-names-small {
+            font-weight: 600;
+            color: #2c1b10;
+        }
+
+        .detail-item {
+            margin-bottom: 14px;
+        }
+
+        .detail-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .detail-label {
+            font-size: 0.7em;
+            text-transform: uppercase;
+            letter-spacing: 2.5px;
+            color: #c59b6d;
+            font-weight: bold;
+            margin-bottom: 4px;
+        }
+
+        .detail-value {
+            color: #4a3320;
+            font-size: 1.05em;
+            font-weight: bold;
+            line-height: 1.4;
+        }
+
+        .venue-text {
+            font-size: 0.85em;
+            font-weight: 400;
+            margin-top: 4px;
+            color: #5c4033;
+        }
+
+        .closing-text {
+            margin-top: 25px;
+            font-size: 0.95em;
+            color: #7a5c43;
+            font-style: italic;
+        }
+
+        /* Subtle Interaction Hint */
+        .hint {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 0.8em;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: #c59b6d;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: opacity 0.5s;
+            z-index: 10;
+        }
+
+        .hint-pulse {
+            width: 5px;
+            height: 5px;
+            background: #c59b6d;
+            border-radius: 50%;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                opacity: 1;
+            }
+
+            50% {
+                transform: scale(1.8);
+                opacity: 0.4;
+            }
+
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        /* Responsive Breakpoints */
+        @media (max-height: 700px) {
+            .invitation-wrapper {
+                height: 90vh;
+            }
+
+            .chapter {
+                padding: 30px 20px;
+            }
+
+            .details-box {
+                margin-top: 15px;
+                padding: 16px 12px;
+            }
+
+            .groom,
+            .bride {
+                font-size: 1.8em;
+            }
+
+            .section-title {
+                font-size: 1.3em;
+            }
+
+            .couple-names-small {
+                font-size: 1.4em;
+            }
+        }
+
+        @media (max-width: 380px) {
+
+            .groom,
+            .bride {
+                font-size: 1.6em;
+            }
+
+            .story-text,
+            .invite-text {
+                font-size: 0.95em;
+            }
+
+            .details-box {
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="invitation-wrapper">
+        <!-- Depth layers for stack appearance -->
+        <div class="depth-layer depth-layer-1"></div>
+        <div class="depth-layer depth-layer-2"></div>
+
+        <div class="invitation-card" id="cardContainer" onclick="nextChapter()">
+            <!-- Chapter 1: Cover -->
+            <div class="chapter" id="chapter-1">
+                <div class="content-inner">
+                    <div class="groom">NARSIMHA CHARY</div>
+                    <div class="ampersand">&</div>
+                    <div class="bride">RAKSHITHA</div>
+                    <div class="decorative-separator"></div>
+                    <div class="tagline">"Two souls, one beautiful journey begins"</div>
+                </div>
+            </div>
+
+            <!-- Chapter 2: The Beginning -->
+            <div class="chapter" id="chapter-2">
+                <div class="content-inner">
+                    <div class="section-title">The Beginning</div>
+                    <div class="decorative-separator"></div>
+                    <div class="story-text">
+                        "From a simple beginning to a bond that grew stronger with time,<br><br>
+                        our story unfolded with warmth, understanding, and love."
+                    </div>
+                </div>
+            </div>
+
+            <!-- Chapter 3: The Journey -->
+            <div class="chapter" id="chapter-3">
+                <div class="content-inner">
+                    <div class="section-title">The Journey</div>
+                    <div class="decorative-separator"></div>
+                    <div class="story-text">
+                        "With every conversation, every smile, and every shared moment,<br><br>
+                        we found not just companionship, but a promise for a lifetime."
+                    </div>
+                </div>
+            </div>
+
+            <!-- Chapter 4: The Celebration Details -->
+            <div class="chapter" id="chapter-4">
+                <div class="content-inner">
+                    <div class="invite-text">Together with our families,<br>we invite you to celebrate the wedding of
+                    </div>
+                    <div class="couple-names-small">Narsimha Chary & Rakshitha</div>
+
+                    <div class="details-box">
+                        <div class="detail-item">
+                            <div class="detail-label">Date</div>
+                            <div class="detail-value">29th April 2026</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">Time</div>
+                            <div class="detail-value">11:17 AM <span
+                                    style="font-weight: 400; font-size: 0.9em">(Wednesday)</span></div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">Venue</div>
+                            <div class="detail-value">
+                                Sri Vasavi Kanayaka Parameshwari Function Hall
+                                <div class="venue-text">Ashoknagar, Karamnagar</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="closing-text">"Your presence will make our celebration complete"</div>
+                </div>
+            </div>
+
+            <!-- Single Subtle Hint (Cover Only) -->
+            <div class="hint" id="hint-text">
+                <span class="hint-pulse"></span> Tap to open
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentChapter = 1;
+        const totalChapters = 4;
+        let isAnimating = false;
+
+        function updateStack() {
+            const chapters = document.querySelectorAll('.chapter');
+
+            chapters.forEach((chapter, index) => {
+                const chapterNum = index + 1;
+
+                if (chapterNum === currentChapter) {
+                    // Active front chapter
+                    chapter.style.transform = 'translateY(0) scale(1)';
+                    chapter.style.opacity = '1';
+                    chapter.style.zIndex = '10';
+                    chapter.style.pointerEvents = 'auto';
+
+                } else if (chapterNum < currentChapter) {
+                    // Past chapters (slide up slightly, fade out behind)
+                    chapter.style.transform = 'translateY(-40px) scale(0.96)';
+                    chapter.style.opacity = '0';
+                    chapter.style.zIndex = '1';
+                    chapter.style.pointerEvents = 'none';
+
+                } else {
+                    // Future chapters (waiting completely below, off-screen)
+                    chapter.style.transform = 'translateY(110%) scale(1)';
+                    chapter.style.opacity = '1';
+                    chapter.style.zIndex = '5';
+                    chapter.style.pointerEvents = 'none';
+                }
+            });
+        }
+
+        function nextChapter() {
+            if (currentChapter >= totalChapters || isAnimating) return;
+
+            isAnimating = true;
+            currentChapter++;
+
+            // Remove hint text gracefully after the first tap
+            const hint = document.getElementById('hint-text');
+            if (hint && currentChapter > 1) {
+                hint.style.opacity = '0';
+                setTimeout(() => hint.remove(), 600);
+            }
+
+            updateStack();
+
+            // Throttle to match edge transition speed (0.9s)
+            setTimeout(() => {
+                isAnimating = false;
+            }, 900);
+        }
+
+        // Setup the initial state on load
+        document.addEventListener('DOMContentLoaded', () => {
+            updateStack();
+
+            // Enable keyboard accessibility
+            document.addEventListener('keydown', (e) => {
+                if (e.key === ' ' || e.key === 'Enter' || e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+                    e.preventDefault();
+                    nextChapter();
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>
