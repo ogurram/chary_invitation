@@ -3,8 +3,18 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Prevents double-tap zooming on mobile to feel like a native app -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    
     <title>Narsimha & Rakshitha - Wedding Invitation</title>
+    
+    <!-- WhatsApp / Social Media Link Preview Meta Tags -->
+    <meta property="og:title" content="Narsimha & Rakshitha - Wedding Invitation">
+    <meta property="og:description" content="Two souls, one beautiful journey begins. We formally invite you to celebrate our wedding on 29th April 2026. Tap to open!">
+    <!-- Uses GitHub raw image as the thumbnail explicitly to guarantee WhatsApp fetches it -->
+    <meta property="og:image" content="https://raw.githubusercontent.com/ogurram/chary_invitation/main/bg_cover.png">
+    <meta property="og:type" content="website">
+
     <style>
         /* Base Reset & Variables */
         * {
@@ -17,7 +27,10 @@
             font-family: 'Georgia', serif;
             background: #e6d8c4;
             background: radial-gradient(ellipse at center, #fdfbf7 0%, #ecdcc0 100%);
+            /* Mobile App Adjustments */
             height: 100vh;
+            height: 100dvh; /* accounts for mobile address bar shifts perfectly */
+            overscroll-behavior: none; /* prevents rubber-band scrolling/pull-to-refresh */
             display: flex;
             justify-content: center;
             align-items: center;
