@@ -14,7 +14,8 @@
         content="Two souls, one beautiful journey begins. We formally invite you to celebrate our wedding on 29th April 2026. Tap to open!">
     <!-- Uses GitHub raw image as the thumbnail explicitly to guarantee WhatsApp fetches it -->
     <!-- WhatsApp strictly requires OG images to be under 300KB! -->
-    <meta property="og:image" content="https://raw.githubusercontent.com/ogurram/chary_invitation/main/whatsapp_thumb.jpg">
+    <meta property="og:image"
+        content="https://raw.githubusercontent.com/ogurram/chary_invitation/main/whatsapp_thumb.jpg">
     <meta property="og:type" content="website">
 
     <style>
@@ -137,7 +138,8 @@
             left: 0;
             right: 0;
             bottom: 0;
-            opacity: 0.55; /* Increased opacity heavily so the artwork is fully prominent */
+            opacity: 0.55;
+            /* Increased opacity heavily so the artwork is fully prominent */
             pointer-events: none;
             z-index: 0;
         }
@@ -147,7 +149,7 @@
         }
 
         #chapter-2::before {
-            background: url('./bg_beginning.png') center/cover;
+            background: url('./story.png') center/cover;
         }
 
         #chapter-3::before {
@@ -278,7 +280,8 @@
         /* Frosted Glass Overlay specifically for heavy background imagery frames */
         #chapter-2 .content-inner,
         #chapter-3 .content-inner {
-            background: rgba(255, 255, 255, 0.35); /* Translucent glass instead of opaque cream */
+            background: rgba(255, 255, 255, 0.35);
+            /* Translucent glass instead of opaque cream */
             padding: 30px 20px;
             border-radius: 12px;
             border: 1px solid rgba(255, 255, 255, 0.5);
@@ -462,9 +465,17 @@
         }
 
         @keyframes pulseHint {
-            0% { box-shadow: 0 0 0 0 rgba(197, 155, 109, 0.4); }
-            70% { box-shadow: 0 0 0 10px rgba(197, 155, 109, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(197, 155, 109, 0); }
+            0% {
+                box-shadow: 0 0 0 0 rgba(197, 155, 109, 0.4);
+            }
+
+            70% {
+                box-shadow: 0 0 0 10px rgba(197, 155, 109, 0);
+            }
+
+            100% {
+                box-shadow: 0 0 0 0 rgba(197, 155, 109, 0);
+            }
         }
 
         #video-sequence {
@@ -504,8 +515,8 @@
             font-size: 2em;
             letter-spacing: 3px;
             font-style: italic;
-            text-shadow: 0 0 15px rgba(0,0,0,1), 0 0 30px rgba(0,0,0,0.8), 2px 2px 5px rgba(0,0,0,0.9);
-            background: linear-gradient(to top, rgba(0,0,0,0) 0%, rgba(0,0,0,0.6) 50%, rgba(0,0,0,0) 100%);
+            text-shadow: 0 0 15px rgba(0, 0, 0, 1), 0 0 30px rgba(0, 0, 0, 0.8), 2px 2px 5px rgba(0, 0, 0, 0.9);
+            background: linear-gradient(to top, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.6) 50%, rgba(0, 0, 0, 0) 100%);
             padding: 30px 0;
             opacity: 0;
             z-index: 110;
@@ -516,6 +527,7 @@
                 background-size: 100% auto;
                 background-position: center 35%;
             }
+
             .scene-text {
                 bottom: 25%;
                 font-size: 1.5em;
@@ -523,24 +535,64 @@
         }
 
         @keyframes cinematicFadeZoom {
-            0% { opacity: 0; transform: scale(1.1); }
-            10% { opacity: 1; }
-            90% { opacity: 1; }
-            100% { opacity: 0; transform: scale(1.05); }
+            0% {
+                opacity: 0;
+                transform: scale(1.1);
+            }
+
+            10% {
+                opacity: 1;
+            }
+
+            90% {
+                opacity: 1;
+            }
+
+            100% {
+                opacity: 0;
+                transform: scale(1.05);
+            }
         }
 
         @keyframes cinematicFadeZoomLong {
-            0% { opacity: 0; transform: scale(1.1); }
-            6% { opacity: 1; }
-            90% { opacity: 1; }
-            100% { opacity: 0; transform: scale(1.05); }
+            0% {
+                opacity: 0;
+                transform: scale(1.1);
+            }
+
+            6% {
+                opacity: 1;
+            }
+
+            90% {
+                opacity: 1;
+            }
+
+            100% {
+                opacity: 0;
+                transform: scale(1.05);
+            }
         }
 
         @keyframes textFadeIn {
-            0% { opacity: 0; transform: translateY(15px); }
-            15% { opacity: 1; transform: translateY(0); }
-            85% { opacity: 1; transform: translateY(0); }
-            100% { opacity: 0; }
+            0% {
+                opacity: 0;
+                transform: translateY(15px);
+            }
+
+            15% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+
+            85% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+
+            100% {
+                opacity: 0;
+            }
         }
 
         .invitation-wrapper {
@@ -565,7 +617,7 @@
 
     <!-- Cinematic Video Intro -->
     <div id="video-sequence">
-        <div class="video-scene" id="scene-1" style="background-image: url('./story.png');"></div>
+        <div class="video-scene" id="scene-1" style="background-image: url('./bg_beginning.png');"></div>
         <div class="scene-text" id="text-1">He proposed...</div>
         <div class="scene-text" id="text-2">...and she said Yes!</div>
     </div>
