@@ -288,11 +288,11 @@
             width: 95%;
         }
 
-        /* Shift the text boxes to the bottom to reveal the faces in the top/center */
+        /* Shift the text boxes completely to the bottom to maximize upper image visibility */
         #chapter-2,
         #chapter-3 {
             justify-content: flex-end;
-            padding-bottom: 50px;
+            padding-bottom: 20px;
         }
 
         #chapter-4 .couple-names-small {
@@ -489,7 +489,7 @@
             height: 100%;
             background-size: contain;
             background-repeat: no-repeat;
-            background-position: center;
+            background-position: center 40%;
             opacity: 0;
             transform: scale(1.1);
         }
@@ -509,6 +509,17 @@
             padding: 30px 0;
             opacity: 0;
             z-index: 110;
+        }
+
+        @media (max-width: 600px) {
+            .video-scene {
+                background-size: 100% auto;
+                background-position: center 35%;
+            }
+            .scene-text {
+                bottom: 25%;
+                font-size: 1.5em;
+            }
         }
 
         @keyframes cinematicFadeZoom {
