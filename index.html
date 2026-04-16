@@ -137,8 +137,7 @@
             left: 0;
             right: 0;
             bottom: 0;
-            opacity: 0.45;
-            /* Increased for stronger background visibility */
+            opacity: 0.55; /* Increased opacity heavily so the artwork is fully prominent */
             pointer-events: none;
             z-index: 0;
         }
@@ -263,13 +262,37 @@
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
         }
 
-        /* Visibility enhancements specifically for the Chapter 4 overlay */
+        /* Visibility enhancements specifically for the Chapter overlays */
         #chapter-4 .invite-text,
         #chapter-4 .couple-names-small,
-        #chapter-4 .closing-text {
+        #chapter-4 .closing-text,
+        #chapter-2 .story-text,
+        #chapter-2 .section-title,
+        #chapter-3 .story-text,
+        #chapter-3 .section-title {
             /* Create a frosted white halo to detach text from the background texture */
-            text-shadow: 0 0 10px rgba(255, 255, 255, 0.9), 0 0 20px rgba(255, 255, 255, 0.8);
+            text-shadow: 0 0 10px rgba(255, 255, 255, 1), 0 0 20px rgba(255, 255, 255, 0.9);
             font-weight: 500;
+        }
+
+        /* Frosted Glass Overlay specifically for heavy background imagery frames */
+        #chapter-2 .content-inner,
+        #chapter-3 .content-inner {
+            background: rgba(255, 255, 255, 0.35); /* Translucent glass instead of opaque cream */
+            padding: 30px 20px;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            -webkit-backdrop-filter: blur(8px);
+            backdrop-filter: blur(8px);
+            width: 95%;
+        }
+
+        /* Shift the text boxes to the bottom to reveal the faces in the top/center */
+        #chapter-2,
+        #chapter-3 {
+            justify-content: flex-end;
+            padding-bottom: 50px;
         }
 
         #chapter-4 .couple-names-small {
@@ -402,10 +425,140 @@
                 padding: 15px;
             }
         }
+
+        /* --- Cinematic Video Intro Styles --- */
+        #start-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            height: 100dvh;
+            background: #1a110b;
+            z-index: 200;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: #c59b6d;
+            font-size: 1.1em;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: opacity 0.8s;
+        }
+
+        .start-btn {
+            padding: 15px 30px;
+            border: 1px solid #c59b6d;
+            border-radius: 4px;
+            margin-top: 20px;
+            background: transparent;
+            color: #c59b6d;
+            font-family: inherit;
+            letter-spacing: 3px;
+            cursor: pointer;
+            animation: pulseHint 2s infinite;
+        }
+
+        @keyframes pulseHint {
+            0% { box-shadow: 0 0 0 0 rgba(197, 155, 109, 0.4); }
+            70% { box-shadow: 0 0 0 10px rgba(197, 155, 109, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(197, 155, 109, 0); }
+        }
+
+        #video-sequence {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            height: 100dvh;
+            background: #000;
+            z-index: 100;
+            display: none;
+            overflow: hidden;
+            transition: opacity 1.5s ease-out;
+        }
+
+        .video-scene {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            opacity: 0;
+            transform: scale(1.1);
+        }
+
+        .scene-text {
+            position: absolute;
+            bottom: 15%;
+            left: 0;
+            width: 100%;
+            text-align: center;
+            color: #fff;
+            font-size: 2em;
+            letter-spacing: 3px;
+            font-style: italic;
+            text-shadow: 0 0 15px rgba(0,0,0,1), 0 0 30px rgba(0,0,0,0.8), 2px 2px 5px rgba(0,0,0,0.9);
+            background: linear-gradient(to top, rgba(0,0,0,0) 0%, rgba(0,0,0,0.6) 50%, rgba(0,0,0,0) 100%);
+            padding: 30px 0;
+            opacity: 0;
+            z-index: 110;
+        }
+
+        @keyframes cinematicFadeZoom {
+            0% { opacity: 0; transform: scale(1.1); }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { opacity: 0; transform: scale(1.05); }
+        }
+
+        @keyframes cinematicFadeZoomLong {
+            0% { opacity: 0; transform: scale(1.1); }
+            6% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { opacity: 0; transform: scale(1.05); }
+        }
+
+        @keyframes textFadeIn {
+            0% { opacity: 0; transform: translateY(15px); }
+            15% { opacity: 1; transform: translateY(0); }
+            85% { opacity: 1; transform: translateY(0); }
+            100% { opacity: 0; }
+        }
+
+        .invitation-wrapper {
+            opacity: 0;
+            transition: opacity 1.5s ease;
+            pointer-events: none;
+        }
+
+        .invitation-wrapper.ready {
+            opacity: 1;
+            pointer-events: auto;
+        }
     </style>
 </head>
 
 <body>
+    <!-- Start Overlay -->
+    <div id="start-overlay" onclick="startSequence()">
+        <div>Our Beautiful Journey</div>
+        <button class="start-btn">Tap to Watch</button>
+    </div>
+
+    <!-- Cinematic Video Intro -->
+    <div id="video-sequence">
+        <div class="video-scene" id="scene-1" style="background-image: url('./story.png');"></div>
+        <div class="scene-text" id="text-1">He proposed...</div>
+        <div class="scene-text" id="text-2">...and she said Yes!</div>
+    </div>
+
     <div class="invitation-wrapper">
         <!-- Depth layers for stack appearance -->
         <div class="depth-layer depth-layer-1"></div>
@@ -485,6 +638,47 @@
     </div>
 
     <script>
+        function startSequence() {
+            // Hide start overlay
+            document.getElementById('start-overlay').style.opacity = '0';
+            setTimeout(() => {
+                document.getElementById('start-overlay').style.display = 'none';
+            }, 800);
+
+            // Show and start video sequence
+            const videoSeq = document.getElementById('video-sequence');
+            videoSeq.style.display = 'block';
+
+            const scene1 = document.getElementById('scene-1');
+            const text1 = document.getElementById('text-1');
+            const text2 = document.getElementById('text-2');
+
+            // Overall continuous background (0s - 7.5s)
+            setTimeout(() => {
+                scene1.style.animation = 'cinematicFadeZoomLong 7.5s ease-out forwards';
+            }, 100);
+
+            // Text 1: Proposal (0s - 3.5s)
+            setTimeout(() => {
+                text1.style.animation = 'textFadeIn 3.5s ease-out forwards';
+            }, 100);
+
+            // Text 2: Acceptance (3.5s - 7.0s)
+            setTimeout(() => {
+                text2.style.animation = 'textFadeIn 3.5s ease-out forwards';
+            }, 3500);
+
+            // Transition to Invitation (7.0s - 8.5s)
+            setTimeout(() => {
+                videoSeq.style.opacity = '0';
+                setTimeout(() => {
+                    videoSeq.style.display = 'none';
+                    // Show invitation
+                    document.querySelector('.invitation-wrapper').classList.add('ready');
+                }, 1500);
+            }, 7000);
+        }
+
         let currentChapter = 1;
         const totalChapters = 4;
         let isAnimating = false;
