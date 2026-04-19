@@ -632,7 +632,7 @@
 
     <!-- Cinematic Video Intro -->
     <div id="video-sequence">
-        <video id="intro-video" class="video-scene" playsinline>
+        <video id="intro-video" class="video-scene" playsinline loop>
             <source src="./proposal_video.mp4" type="video/mp4">
         </video>
         
@@ -774,14 +774,13 @@
                 scene2.classList.add('rotating-out');
                 
                 setTimeout(() => {
+                    // Hide intro but keep it in the DOM for continuous audio
                     videoSeq.style.opacity = '0';
-                    setTimeout(() => {
-                        videoSeq.style.display = 'none';
-                        introVideo.pause(); // Finally stop music
-                        // Show invitation
-                        document.querySelector('.invitation-wrapper').classList.add('ready');
-                    }, 1200);
-                }, 1500); // Wait for rotation to progress
+                    videoSeq.style.pointerEvents = 'none'; 
+                    
+                    // Show invitation
+                    document.querySelector('.invitation-wrapper').classList.add('ready');
+                }, 1500); 
             }, 25000);
         }
 
