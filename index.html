@@ -502,7 +502,23 @@
             background: #000;
             transform: translate(-50%, -50%);
             opacity: 0;
-            transition: opacity 1s;
+            transition: opacity 1.2s ease-in-out;
+        }
+
+        /* Rotation Transition Effect */
+        .rotating-out {
+            animation: rotateZoom 1.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        }
+
+        @keyframes rotateZoom {
+            0% {
+                transform: translate(-50%, -50%) scale(1) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translate(-50%, -50%) scale(0.2) rotate(1080deg);
+                opacity: 0;
+            }
         }
 
         .scene-text {
@@ -619,8 +635,15 @@
         <video id="intro-video" class="video-scene" playsinline>
             <source src="./proposal_video.mp4" type="video/mp4">
         </video>
+        
+        <!-- Story End Images -->
+        <div id="scene-end-1" class="video-scene" style="background-image: url('./story_end_1.jpeg'); background-size: contain; background-repeat: no-repeat; background-position: center;"></div>
+        <div id="scene-end-2" class="video-scene" style="background-image: url('./story_end_2.jpeg'); background-size: contain; background-repeat: no-repeat; background-position: center;"></div>
+
         <div class="scene-text" id="text-1">He proposed...</div>
         <div class="scene-text" id="text-2">...and she said Yes!</div>
+        <div class="scene-text" id="text-3">Together, we begin...</div>
+        <div class="scene-text" id="text-4">...our beautiful forever.</div>
     </div>
 
     <div class="invitation-wrapper">
@@ -712,35 +735,54 @@
             // Show and start video sequence
             const videoSeq = document.getElementById('video-sequence');
             const introVideo = document.getElementById('intro-video');
+            const scene1 = document.getElementById('scene-end-1');
+            const scene2 = document.getElementById('scene-end-2');
+            
             videoSeq.style.display = 'block';
 
             const text1 = document.getElementById('text-1');
             const text2 = document.getElementById('text-2');
+            const text3 = document.getElementById('text-3');
+            const text4 = document.getElementById('text-4');
 
-            // Play video with sound
+            // 1. Play Video (0 - 15s)
             introVideo.play().catch(e => console.error("Video play failed:", e));
             introVideo.style.opacity = '1';
 
-            // Text 1: Proposal (1s - 7s)
-            setTimeout(() => {
-                text1.style.animation = 'textFadeIn 6s ease-out forwards';
-            }, 1000);
+            // Text 1: Proposal
+            setTimeout(() => { text1.style.animation = 'textFadeIn 6s ease-out forwards'; }, 1000);
+            // Text 2: Acceptance
+            setTimeout(() => { text2.style.animation = 'textFadeIn 6s ease-out forwards'; }, 8000);
 
-            // Text 2: Acceptance (8s - 14s)
+            // 2. Transition to Story End 1 (15s - 20s)
             setTimeout(() => {
-                text2.style.animation = 'textFadeIn 6s ease-out forwards';
-            }, 8000);
+                introVideo.style.opacity = '0'; // Hide video but keep audio
+                scene1.style.opacity = '1';
+                text3.style.animation = 'textFadeIn 4s ease-out forwards';
+            }, 15000);
 
-            // Transition to Invitation (15s mark)
+            // 3. Transition to Story End 2 (20s - 25s)
             setTimeout(() => {
-                videoSeq.style.opacity = '0';
+                scene1.style.opacity = '0';
+                scene2.style.opacity = '1';
+                text4.style.animation = 'textFadeIn 4s ease-out forwards';
+            }, 20000);
+
+            // 4. Final Rotation & Card Reveal (Starting at 25s)
+            setTimeout(() => {
+                // Apply rotation effect
+                scene2.classList.add('rotating-out');
+                
                 setTimeout(() => {
-                    videoSeq.style.display = 'none';
-                    introVideo.pause(); // Stop video after sequence
-                    // Show invitation
-                    document.querySelector('.invitation-wrapper').classList.add('ready');
-                }, 1500);
-            }, 15000); // Increased to 15 seconds as requested
+                    videoSeq.style.opacity = '0';
+                    setTimeout(() => {
+                        videoSeq.style.display = 'none';
+                        introVideo.pause(); // Finally stop music
+                        // Show invitation
+                        document.querySelector('.invitation-wrapper').classList.add('ready');
+                    }, 1200);
+                }, 1500); // Wait for rotation to progress
+            }, 25000);
         }
 
         let currentChapter = 1;
