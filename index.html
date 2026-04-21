@@ -515,6 +515,7 @@
                 transform: translate(-50%, -50%) scale(1) rotate(0deg);
                 opacity: 1;
             }
+
             100% {
                 transform: translate(-50%, -50%) scale(0.2) rotate(1080deg);
                 opacity: 0;
@@ -635,10 +636,14 @@
         <video id="intro-video" class="video-scene" playsinline loop>
             <source src="./proposal_video.mp4" type="video/mp4">
         </video>
-        
+
         <!-- Story End Images -->
-        <div id="scene-end-1" class="video-scene" style="background-image: url('./story_end_1.jpeg'); background-size: contain; background-repeat: no-repeat; background-position: center;"></div>
-        <div id="scene-end-2" class="video-scene" style="background-image: url('./story_end_2.jpeg'); background-size: contain; background-repeat: no-repeat; background-position: center;"></div>
+        <div id="scene-end-1" class="video-scene"
+            style="background-image: url('./story_end_1.jpeg'); background-size: contain; background-repeat: no-repeat; background-position: center;">
+        </div>
+        <div id="scene-end-2" class="video-scene"
+            style="background-image: url('./story_end_2.jpeg'); background-size: contain; background-repeat: no-repeat; background-position: center;">
+        </div>
 
         <div class="scene-text" id="text-1">He proposed...</div>
         <div class="scene-text" id="text-2">...and she said Yes!</div>
@@ -707,7 +712,7 @@
                         <div class="detail-item">
                             <div class="detail-label">Venue</div>
                             <div class="detail-value">
-                                Sri Vasavi Kanayaka Parameshwari Function Hall
+                                Sri Vasavi Kanyakaparameswari Function Hall
                                 <div class="venue-text">Ashoknagar, Karimnagar</div>
                             </div>
                         </div>
@@ -737,7 +742,7 @@
             const introVideo = document.getElementById('intro-video');
             const scene1 = document.getElementById('scene-end-1');
             const scene2 = document.getElementById('scene-end-2');
-            
+
             videoSeq.style.display = 'block';
 
             const text1 = document.getElementById('text-1');
@@ -772,15 +777,15 @@
             setTimeout(() => {
                 // Apply rotation effect
                 scene2.classList.add('rotating-out');
-                
+
                 setTimeout(() => {
                     // Hide intro but keep it in the DOM for continuous audio
                     videoSeq.style.opacity = '0';
-                    videoSeq.style.pointerEvents = 'none'; 
-                    
+                    videoSeq.style.pointerEvents = 'none';
+
                     // Show invitation
                     document.querySelector('.invitation-wrapper').classList.add('ready');
-                }, 1500); 
+                }, 1500);
             }, 25000);
         }
 
